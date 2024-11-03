@@ -6,13 +6,13 @@ const openai = new OpenAI();
 
 export const POST = async (req: Request) => {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const body = await req.json();
     const { messages } = body;
 
-    // if (!userId) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (!openai.apiKey) {
       return new NextResponse("OpenAI API Key not configured", {

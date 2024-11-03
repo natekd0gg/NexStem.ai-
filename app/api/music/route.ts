@@ -8,13 +8,13 @@ const replicate = new Replicate({
 
 export const POST = async (req: Request) => {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const body = await req.json();
     const { prompt } = body;
 
-    // if (!userId) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (!prompt) {
       return new NextResponse("Prompt is required", { status: 400 });
